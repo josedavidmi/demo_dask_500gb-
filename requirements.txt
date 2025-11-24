@@ -1,1 +1,6 @@
-
+dask[complete]
+pandas
+numpy
+fsspec
+s3fs            # solo si queréis probar con S3 real
+pyarrow         # para escribir/leer parquet
