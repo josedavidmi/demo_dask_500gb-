@@ -57,7 +57,7 @@ df_norm.to_parquet(...)
 ```
 
 ## 5. Cómo “convertirlo” en cloud (S3, Azure, etc.)
-Cuando quieras enlazarlo con la parte de almacenamiento en la nube del RA:
+Cuando quieras enlazarlo con la parte de almacenamiento en la nube:
 En vez de 
 
 ```python
