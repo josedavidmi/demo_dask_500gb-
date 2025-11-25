@@ -111,7 +111,7 @@ Sigue estos pasos para descargar el proyecto y preparar tu entorno de trabajo ai
 
 ### 1. Clonar el repositorio
 ```bash
-git clone [https://github.com/TU_USUARIO/demo_dask_500gb.git](https://github.com/TU_USUARIO/demo_dask_500gb.git)
+git clone https://github.com/josedavidmi/demo_dask_500gb-.git
 cd demo_dask_500gb
 ```
 
@@ -133,7 +133,7 @@ python3 -m venv env
 source env/bin/activate
 ```
 
-> 💡 **Nota:** Sabrás que funciona si ves `(env)` al inicio de tu terminal.
+>  **Nota:** Sabrás que funciona si ves `(env)` al inicio de tu terminal.
 
 ### 3. Instalar dependencias
 
