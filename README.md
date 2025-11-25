@@ -1,4 +1,5 @@
-##1. Estructura del proyecto
+## 1. Estructura del proyecto
+```plaintext
 demo_dask_500gb/
 ├─ requirements.txt
 ├─ README.md            (opcional, para ti)
@@ -6,52 +7,69 @@ demo_dask_500gb/
 │   └─ generar_datos.py
 ├─ procesar_con_dask.py
 └─ config_example.yaml  (opcional, para rutas remotas)
+```
 
-##2. requirements.txt
-   dask[complete]
-   pandas
-   numpy
-   fsspec
-  s3fs            # solo si queréis probar con S3 real
-  pyarrow         # para escribir/leer parquet
+## 2. requirements.txt
+```plaintext
+dask[complete]
+pandas
+numpy
+fsspec
+s3fs            # solo si queréis probar con S3 real
+pyarrow         # para escribir/leer parquet
+```
 
 En local (sin S3) bastan dask[complete], pandas, numpy y pyarrow.
 
-##3. Script para generar datos de ejemplo
+## 3. Script para generar datos de ejemplo
 Esto simula el “gran fichero” (en pequeño).
 Para un nivel más hardcore puedes subir N_FILAS a 10M.
 
-##4. Script principal con Dask
+## 4. Script principal con Dask
 
-Archivo: procesar_con_dask.py
+**Archivo:** `procesar_con_dask.py`
 Hace tres cosas:
   * Leer el CSV “grande” con Dask en particiones (como si fueran bloques de 256 MB).
   * Calcular media y desviación típica de importe.
   * Crear una columna normalizada y guardar el resultado en un “bucket” local (output/).
 
-Archivo: data/generar_datos.py
+**Archivo:** `data/generar_datos.py`  
 Genera un CSV “tipo log / ventas” de tamaño configurable.
 
-Qué pueden observar los alumnos aquí
+**Qué pueden observar los alumnos aquí**
 
+```python
 dd.read_csv(..., blocksize="64MB")
-→ Dask trata el fichero como muchas particiones, nunca como un solo DataFrame gigante en RAM.
+# → Dask trata el fichero como muchas particiones, nunca como un solo DataFrame gigante en RAM.
 
 media = df["importe"].mean()
-→ lazy: construye el plan, no lee aún el fichero.
+# → lazy: construye el plan, no lee aún el fichero.
 
 media.compute() / std.compute()
-→ aquí se dispara el cómputo: Dask recorre todas las particiones, calcula sumas parciales, las combina, etc.
+# → aquí se dispara el cómputo: Dask recorre todas las particiones, calcula sumas parciales, las combina, etc.
 
 df_norm.to_parquet(...)
-→ también dispara cómputo: recorre de nuevo las particiones, aplica la normalización y escribe el resultado por partes.
+# → también dispara cómputo: recorre de nuevo las particiones, aplica la normalización y escribe el resultado por partes.
+```
 
-5. Cómo “convertirlo” en cloud (S3, Azure, etc.)
+## 5. Cómo “convertirlo” en cloud (S3, Azure, etc.)
 Cuando quieras enlazarlo con la parte de almacenamiento en la nube del RA:
-En vez de RUTA_ENTRADA = "data/ventas_logs.csv" podrías usar rutas como:
+En vez de 
+
+```python
+RUTA_ENTRADA = "data/ventas_logs.csv"
+```
+
+podrías usar rutas como:
+
+```python
 RUTA_ENTRADA = "s3://mi-bucket/ventas/ventas_logs.csv"
-RUTA_ENTRADA = "abfs://container@account.dfs.core.windows.net/ventas_logs.csv" (Azure)
-Y pasar storage_options:
+RUTA_ENTRADA = "abfs://container@account.dfs.core.windows.net/ventas_logs.csv"  # (Azure)
+```
+
+Y pasar `storage_options`:
+
+```python
 df = dd.read_csv(
     "s3://mi-bucket/ventas/ventas_logs.csv",
     blocksize=BLOCKSIZE,
@@ -60,20 +78,25 @@ df = dd.read_csv(
         "secret": "TU_SECRET_KEY",
     }
 )
+```
 
 Igual con la salida:
 
+```python
 FICHERO_SALIDA_PARQUET = "s3://mi-bucket/resultados/ventas_normalizadas.parquet"
 FICHERO_STATS_SALIDA = "s3://mi-bucket/resultados/stats_importe.csv"
+```
 
 El código de Dask es esencialmente el mismo; solo cambian las rutas y las credenciales. Eso engancha muy bien con:
-“puedo almacenar tantos datos como quiera y decidir después cómo procesarlos”
-“el sistema puede crecer añadiendo nodos / workers”.
-6. Cómo usarlo en clase (resumen)
-Ejecutar python data/generar_datos.py.
-Verificar tamaño del CSV (que sea “grandecito”).
-Ejecutar python procesar_con_dask.py.
-Comentar:
-* qué hace blocksize,
-* qué pasa en .compute(),
-* por qué se puede escalar a varios nodos sin cambiar mucho el código.
+
+- “puedo almacenar tantos datos como quiera y decidir después cómo procesarlos”
+- “el sistema puede crecer añadiendo nodos / workers”.
+
+## 6. Cómo usarlo en clase (resumen)
+1. Ejecutar `python data/generar_datos.py`.
+2. Verificar tamaño del CSV (que sea “grandecito”).
+3. Ejecutar `python procesar_con_dask.py`.
+4. Comentar:
+    * qué hace blocksize,
+    * qué pasa en .compute(),
+    * por qué se puede escalar a varios nodos sin cambiar mucho el código.
