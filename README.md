@@ -105,17 +105,17 @@ El código de Dask es esencialmente el mismo; solo cambian las rutas y las crede
     * qué pasa en .compute(),
     * por qué se puede escalar a varios nodos sin cambiar mucho el código.
 
-## Instalación y Configuración
+## 7. Instalación y Configuración
 
 Sigue estos pasos para descargar el proyecto y preparar tu entorno de trabajo aislado.
 
-### 1. Clonar el repositorio
+### Clonar el repositorio
 ```bash
 git clone https://github.com/josedavidmi/demo_dask_500gb-.git
 cd demo_dask_500gb
 ```
 
-### 2. Crear y activar el entorno virtual
+### Crear y activar el entorno virtual
 
 Es fundamental crear un entorno aislado (`env`) para no corromper tu instalación local de Python.
 
@@ -135,7 +135,7 @@ source env/bin/activate
 
 >  **Nota:** Sabrás que funciona si ves `(env)` al inicio de tu terminal.
 
-### 3. Instalar dependencias
+### Instalar dependencias
 
 ```bash
 pip install -r requirements.txt
