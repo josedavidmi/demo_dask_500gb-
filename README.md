@@ -1,6 +1,6 @@
 # Actividad RA2: Procesamiento de 500 GB con Recursos Limitados
 
-<img src="./imagenes/imagen1.jpg" alt="Diagrama conceptual de Big Data" width="300"/>
+<img src="./imagenes/imagen1.png" alt="Diagrama conceptual de Big Data" width="300"/>   <img src="./imagenes/imagen2.png" alt="Diagrama conceptual de Big Data" width="300"/>
 
 ## 1. Estructura del proyecto
 ```plaintext
