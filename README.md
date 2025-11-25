@@ -40,7 +40,7 @@ Hace tres cosas:
 **Archivo:** `data/generar_datos.py`  
 Genera un CSV “tipo log / ventas” de tamaño configurable.
 
-**Qué pueden observar los alumnos aquí**
+**Qué se puede observar aquí**
 
 ```python
 dd.read_csv(..., blocksize="64MB")
