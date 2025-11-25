@@ -1,5 +1,7 @@
 # Actividad RA2: Procesamiento de 500 GB con Recursos Limitados
-![Diagrama conceptual de Big Data: De 500 GB en un portátil a la Nube](./imagenes/presentación.jpg)
+
+<img src="./imagenes/presentación.jpg" alt="Diagrama conceptual de Big Data" width="300"/>
+
 ## 1. Estructura del proyecto
 ```plaintext
 demo_dask_500gb/
